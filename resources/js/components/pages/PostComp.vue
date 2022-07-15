@@ -2,7 +2,7 @@
     <div>
         <div class="mt-3 ">
             <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
+            <p>{{ shortContent }}</p>
         </div>
     </div>
 </template>
@@ -12,6 +12,12 @@ export default {
     name: 'PostComp',
     props:{
         post:Object
+    },
+
+    computed:{
+        shortContent(){
+            return this.post.content.substr(0, 40) + "...";
+        }
     }
 }
 </script>
