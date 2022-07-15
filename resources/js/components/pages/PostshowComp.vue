@@ -1,8 +1,13 @@
 <template>
     <div>
         <h2>{{ post.title }}</h2>
+        <h5>Category: {{ post.category.category }}</h5>
         <p>{{ post.content }}</p>
-        <i>Updated on: {{ formatDate() }}</i>
+        <em
+        v-for="tag in post.tags"
+        :key="`tag${tag.id}`"
+        class="post-tags">{{ tag.name }}</em>
+        <i class="d-block">Updated on: {{ formatDate() }}</i>
     </div>
 </template>
 
@@ -22,7 +27,7 @@ export default {
         getApi(){
             axios.get(this.apiUrl + '/' + this.$route.params.slug)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.post = res.data.post
             })
         },
@@ -47,5 +52,12 @@ export default {
 <style lang="scss" scoped>
 h2{
     text-transform: capitalize;
+}
+
+.post-tags{
+    margin: 10px 4px;
+    padding: 3px 6px;
+    background-color: #007BFF;
+    border-radius: 10px;
 }
 </style>

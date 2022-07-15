@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
+use App\Tag;
 
 class PageController extends Controller
 {
@@ -20,5 +22,13 @@ class PageController extends Controller
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
 
         return response()->json(compact('post'));
+    }
+
+    public function getTagsAndCategories(){
+        $categories = Category::all();
+
+        $tags = Tag::all();
+
+        return response()->json(compact('categories', 'tags'));
     }
 }

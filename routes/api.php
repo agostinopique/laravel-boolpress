@@ -19,4 +19,5 @@ Route::namespace('Api')
     ->group(function(){
         Route::get('/', 'PageController@index');
         Route::get('/{slug}', 'PageController@getPostViaSlug');
+        Route::get('/tags-categories', 'PageController@getTagsAndCategories');
     });
