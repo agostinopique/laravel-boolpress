@@ -9,7 +9,7 @@ use App\Post;
 class PageController extends Controller
 {
     public function index(){
-        $posts = Post::with('category')->with('tags')->get();
+        $posts = Post::with('category')->with('tags')->paginate(6);
 
         return response()->json(compact('posts'));
     }

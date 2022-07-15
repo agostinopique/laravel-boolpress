@@ -1979,6 +1979,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'BlogComp',
@@ -1988,20 +2008,25 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       apiUrl: '/api/posts',
-      posts: null
+      posts: null,
+      currentPage: null,
+      lastPage: null
     };
   },
   methods: {
-    getApi: function getApi() {
+    getApi: function getApi(page) {
       var _this = this;
 
-      axios.get(this.apiUrl).then(function (res) {
-        _this.posts = res.data.posts;
+      axios.get(this.apiUrl + '?page=' + page).then(function (res) {
+        console.log(res.data.posts);
+        _this.currentPage = res.data.posts.current_page;
+        _this.posts = res.data.posts.data;
+        _this.lastPage = res.data.posts.last_page;
       });
     }
   },
   mounted: function mounted() {
-    this.getApi();
+    this.getApi(1);
   }
 });
 
@@ -3495,18 +3520,71 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h1", [_vm._v("Our blogs latest posts")]),
-      _vm._v(" "),
-      _vm._l(_vm.posts, function (post) {
-        return _c("PostComp", { key: post.id, attrs: { post: post } })
-      }),
-    ],
-    2
-  )
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      [
+        _c("h1", [_vm._v("Our blogs latest posts")]),
+        _vm._v(" "),
+        _vm._l(_vm.posts, function (post) {
+          return _c("PostComp", { key: post.id, attrs: { post: post } })
+        }),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "mt-4 pb-4" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.currentPage === 1 },
+            on: {
+              click: function ($event) {
+                return _vm.getApi(_vm.currentPage + 1)
+              },
+            },
+          },
+          [_vm._v("<<<")]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.lastPage, function (i) {
+          return _c(
+            "button",
+            {
+              key: i,
+              staticClass: "btn btn-primary mx-1",
+              attrs: { disabled: _vm.currentPage === i },
+              on: {
+                click: function ($event) {
+                  return _vm.getApi(i)
+                },
+              },
+            },
+            [_vm._v(_vm._s(i))]
+          )
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.currentPage === _vm.lastPage },
+            on: {
+              click: function ($event) {
+                return _vm.getApi(_vm.currentPage + 1)
+              },
+            },
+          },
+          [_vm._v(">>>")]
+        ),
+      ],
+      2
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
