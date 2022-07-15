@@ -61,7 +61,7 @@ export default {
         this.posts = null;
             axios.get(this.apiUrl + '?page=' + page)
             .then(res => {
-                console.log(res.data.posts);
+
                 this.currentPage = res.data.posts.current_page;
                 this.posts = res.data.posts.data;
                 this.lastPage = res.data.posts.last_page;

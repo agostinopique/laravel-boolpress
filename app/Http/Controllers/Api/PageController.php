@@ -15,4 +15,10 @@ class PageController extends Controller
 
         return response()->json(compact('posts'));
     }
+
+    public function getPostViaSlug($slug){
+        $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
+
+        return response()->json(compact('post'));
+    }
 }
