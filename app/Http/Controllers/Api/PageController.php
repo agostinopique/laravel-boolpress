@@ -25,10 +25,12 @@ class PageController extends Controller
     }
 
     public function getTagsAndCategories(){
+
         $categories = Category::all();
 
         $tags = Tag::all();
 
         return response()->json(compact('categories', 'tags'));
+        // return response()->json(compact('categories'));
     }
 }

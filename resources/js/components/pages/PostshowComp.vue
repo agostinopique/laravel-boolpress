@@ -27,7 +27,7 @@ export default {
         getApi(){
             axios.get(this.apiUrl + '/' + this.$route.params.slug)
             .then(res => {
-                // console.log(res.data);
+                console.log(res.data);
                 this.post = res.data.post
             })
         },

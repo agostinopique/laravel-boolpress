@@ -2219,7 +2219,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get(this.apiUrl + '/' + this.$route.params.slug).then(function (res) {
-        // console.log(res.data);
+        console.log(res.data);
         _this.post = res.data.post;
       });
     },
@@ -2260,18 +2260,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SidenavComp',
   data: function data() {
     return {
-      apiUrl: _data_config__WEBPACK_IMPORTED_MODULE_0__["apiUrl"]
+      apiUrl: _data_config__WEBPACK_IMPORTED_MODULE_0__["apiUrl"],
+      tags: [],
+      categories: []
     };
   },
   methods: {
     getTagsCategories: function getTagsCategories() {
+      var _this = this;
+
       axios.get(this.apiUrl + '/tags-categories').then(function (res) {
-        console.log(res);
+        console.log(res.data);
+        _this.tags = res.data.tags;
+        _this.categories = res.data.categories;
+        console.log(_this.categories);
+        console.log(_this.tags);
       });
     }
   },
@@ -4176,22 +4189,31 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h4", [_vm._v("Categories:")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.categories, function (category) {
+        return _c("li", { key: "cat" + category.id }, [
+          _vm._v(_vm._s(category.category)),
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("h4", [_vm._v("Tags:")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.tags, function (tag) {
+        return _c("li", { key: "cat" + tag.id }, [_vm._v(_vm._s(tag.name))])
+      }),
+      0
+    ),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h4", [_vm._v("Categories:")]),
-      _vm._v(" "),
-      _c("ul", [_c("li")]),
-      _vm._v(" "),
-      _c("h4", [_vm._v("Tags:")]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
