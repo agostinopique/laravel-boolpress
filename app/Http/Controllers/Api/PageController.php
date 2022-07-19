@@ -33,4 +33,16 @@ class PageController extends Controller
         return response()->json(compact('categories', 'tags'));
         // return response()->json(compact('categories'));
     }
+
+    public function getPostByTag($slug_tag){
+        $tagPosts = Tag::where('slug', $slug_tag)->with('posts')->get();
+
+        return response()->json($tagPosts);
+    }
+
+    public function getPostByCategory($slug_category){
+        $catPost = Category::where('slug', $slug_category)->with('posts')->first();
+
+        return response()->json($catPost);
+    }
 }

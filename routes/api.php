@@ -18,6 +18,8 @@ Route::namespace('Api')
     ->prefix('posts')
     ->group(function(){
         Route::get('/', 'PageController@index');
+        Route::get('/search-category/{slug}', 'PageController@getPostByCategory');
+        Route::get('/search-tag/{slug}', 'PageController@getPostByTag');
         Route::get('/tags-categories', 'PageController@getTagsAndCategories');
         Route::get('/{slug}', 'PageController@getPostViaSlug');
     });

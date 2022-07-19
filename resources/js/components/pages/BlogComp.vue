@@ -12,12 +12,12 @@
 
                     <PostComp
                      v-for="post in posts"
-                    :key="post.id"
+                    :key="`post-${post.id}`"
                     :post='post' />
 
                 </div>
 
-                <div class="mt-4 pb-4">
+                <div class="mt-4 pb-4" v-if="success">
                     <button class="btn btn-primary"
                     :disabled="currentPage === 1"
                     @click="getApi(currentPage + 1)">&lt;&lt;</button>
@@ -37,9 +37,12 @@
         </div>
         <!-- /POST SECTION -->
         <!-- SIDE NAV -->
-        <div>
+        <div v-show="posts">
             <SidenavComp
-            />
+            @getPostByTag="getPostByTag"
+            @getPostByCategory="getPostByCategory"
+            @getApi="getApi"/>
+
         </div>
         <!-- /SIDE NAV -->
 
@@ -65,20 +68,51 @@ export default {
             apiUrl: '/api/posts',
             posts: null,
             currentPage: null,
-            lastPage: null
+            lastPage: null,
+            success: true
         }
     },
     methods:{
 
         getApi(page){
             this.posts = null;
+            this.success = false
             axios.get(this.apiUrl + '?page=' + page)
             .then(res => {
 
                 this.currentPage = res.data.posts.current_page;
                 this.posts = res.data.posts.data;
                 this.lastPage = res.data.posts.last_page;
+                this.success = true;
 
+            })
+        },
+
+        getPostByTag(string){
+            // console.log(string);
+            this.posts = null;
+            this.success = false;
+
+            axios.get(this.apiUrl + '/search-tag/' + string)
+            .then(res =>{
+                // console.log(res.data);
+                let postArray = res.data;
+                postArray.forEach(post => {
+                    // console.log(post)
+                    this.posts = post.posts;
+                })
+            })
+        },
+
+        getPostByCategory(string){
+            // console.log(string);
+            this.posts = null;
+            this.success = false;
+
+            axios.get(this.apiUrl + '/search-category/' + string)
+            .then(res => {
+                // console.log(res);
+                this.posts = res.data.posts;
             })
         }
 
